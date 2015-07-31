@@ -1,0 +1,7 @@
+"ut99"
+{
+	"base"		"base"
+	"title"		"Unreal Tournament 99"
+	"maps"		"^dm_|^ctf_"
+	"menusystem"	"1"
+}
