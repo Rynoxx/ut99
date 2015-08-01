@@ -1,4 +1,4 @@
-GM.FlagSpawn = {
+GM.FlagSpawns = {
 	"red" = Vector(2.636492, 1197.186157, -54.968750)
 	"blue" = Vector(2.636492, 1197.186157, -54.968750)
 }

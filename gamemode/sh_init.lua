@@ -32,6 +32,8 @@ function GM:RegisterGamemode(DATA)
 	self.Gamemodes[DATA.id] = DATA
 end
 
+hook.OldCall = hook.OldCall or hook.Call
+
 --[[
 	Function: hook.Call
 	Replaces the default hook.Call
@@ -60,11 +62,13 @@ function hook.Call(name, gamemode, ...)
 
 	local gm = GAMEMODE.Gamemodes[GAMEMODE.Gamemode]
 
-	if gm[name] and type(gm[name]) == "function" then
-		local result = gm[name](gm, ...)
+	if gm then
+		if gm[name] and type(gm[name]) == "function" then
+			local result = gm[name](gm, ...)
 
-		if result != nil then
-			return result
+			if result != nil then
+				return result
+			end
 		end
 	end
 

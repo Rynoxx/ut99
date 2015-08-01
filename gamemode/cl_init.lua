@@ -18,7 +18,8 @@ net.Receive("GamemodeChanged", function(len)
 end)
 
 local hideThese = {
-	"CHudWeaponSelection"
+	"CHudWeaponSelection",
+	"CHudWeapon"
 }
 
 hook.Add("HUDShouldDraw", "HideThings", function(name)

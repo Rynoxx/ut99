@@ -6,7 +6,13 @@ AddCSLuaFile("sh_init.lua")
 util.AddNetworkString("GamemodeChanged")
 util.AddNetworkString("PlayerInitialized")
 
-CreateConVar( "ut_gamemode", "ctf", bit.bor, "Which gamemode should the server run?" )
+resource.AddWorkshop("255053951") -- UT99 PlayerModels
+resource.AddWorkshop("422221058") -- Unreal Tournament Music
+resource.AddWorkshop("189453748") -- Unreal Tournament SWEPs
+
+CreateConVar( "ut_gamemode", "ctf", bit.bor(FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE, FCVAR_UNLOGGED, bit.bnot(FCVAR_CLIENTCMD_CAN_EXECUTE)), "Which gamemode should the server run?" )
+
+GM.Gamemode = GetConVarString("ut_gamemode")
 
 game.ConsoleCommand("mp_falldamage 1\n")
 
@@ -31,7 +37,7 @@ hook.Add( "GetFallDamage", "MPFallDamage", MPFallDamage )
 
 function GM:SendGamemode(ply)
 	net.Start("GamemodeChanged")
-		net.WriteString(self.Gamemode)
+		net.WriteString(self.Gamemode or "")
 	net.Send(ply or player.GetHumans())
 end
 
@@ -44,19 +50,29 @@ function GM:PlayerInitialSpawn(ply)
 end
 
 function GM:PlayerLoadout(ply)
+	ply:SetModel("models/player/barnie.mdl")
 	ply:StripWeapons()
 	ply:StripAmmo()
 
-	ply:SetWalkSpeed(GM.PlayerSpeed)
-	ply:SetRunSpeed(GM.PlayerSpeed)
+	ply:SetWalkSpeed(self.PlayerSpeed)
+	ply:SetRunSpeed(self.PlayerSpeed)
 
-	if string.find(GM.Gamemode, "instagib") then
-		ply:Give(self.Weapons.hammer)
+	if string.find(self.Gamemode, "instagib") then
+		ply:Give(self.Weapons.instagib)
 	else
-
+		ply:Give(self.Weapons.hammer)
 	end
 
-	if GM.Gamemode == "tdm" or GM.Gamemode == "ctf" then
+	if self.Gamemode == "tdm" or self.Gamemode == "ctf" then
 		ply:Give(self.Weapons.teleporter)
 	end
 end
+
+timer.Simple(0.5, function()
+	hook.Add("Think", "StartMatch", function()
+		if table.Count(player.GetHumans()) > 0 then
+			hook.Call("MatchStart")
+			hook.Remove("Think", "StartMatch")
+		end
+	end)
+end)

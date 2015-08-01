@@ -39,10 +39,10 @@ end
 
 function ENT:Return()
 	if self.team == TEAM_RED then
-		self:SetPos(gmod.GetGamemode().FlagSpawn["red"])
+		self:SetPos(gmod.GetGamemode().FlagSpawns["red"])
 		self:DropToFloor()
 	elseif self.team == TEAM_BLUE then
-		self:SetPos(gmod.GetGamemode().FlagSpawn["blue"])
+		self:SetPos(gmod.GetGamemode().FlagSpawns["blue"])
 		self:DropToFloor()
 	end
 end
