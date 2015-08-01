@@ -10,7 +10,7 @@ resource.AddWorkshop("255053951") -- UT99 PlayerModels
 resource.AddWorkshop("422221058") -- Unreal Tournament Music
 resource.AddWorkshop("189453748") -- Unreal Tournament SWEPs
 
-CreateConVar( "ut_gamemode", "ctf", bit.bor(FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE, FCVAR_UNLOGGED, bit.bnot(FCVAR_CLIENTCMD_CAN_EXECUTE)), "Which gamemode should the server run?" )
+CreateConVar( "ut_gamemode", "ctf", bit.bor(FCVAR_REPLICATED, FCVAR_SERVER_CAN_EXECUTE, FCVAR_UNLOGGED), "Which gamemode should the server run?" )
 
 GM.Gamemode = GetConVarString("ut_gamemode")
 
@@ -49,8 +49,11 @@ function GM:PlayerInitialSpawn(ply)
 	self:SendGamemode()
 end
 
+game.ConsoleCommand("ut_gamemode ctf\n")
+
 function GM:PlayerLoadout(ply)
-	ply:SetModel("models/player/barnie.mdl")
+	ply:SetModel(self.PlayerModels[ply:GetInfoNum("ut_playermodel", 1)])
+	ply:SetSkin(ply:GetInfoNum("ut_playermodel_skin", 0))
 	ply:StripWeapons()
 	ply:StripAmmo()
 

@@ -19,9 +19,14 @@ GM.Gamemodes = {
 local files, folders = file.Find(GM.FolderName .. "/gamemodes/*.lua", "LUA")
 
 for k, v in pairs(files) do
+	print(k, v)
 	DATA = {id = string.Replace(v, ".lua", ""), Hooks = {}}
 
 	include(GM.FolderName .. "/gamemodes/" .. v)
+
+	if SERVER then
+		AddCSLuaFile(GM.FolderName .. "/gamemodes/" .. v)
+	end
 
 	GM:RegisterGamemode(DATA)
 
@@ -63,11 +68,13 @@ function hook.Call(name, gamemode, ...)
 	local gm = GAMEMODE.Gamemodes[GAMEMODE.Gamemode]
 
 	if gm then
-		if gm[name] and type(gm[name]) == "function" then
-			local result = gm[name](gm, ...)
+		if gm.Hooks then
+			if gm.Hooks[name] and type(gm.Hooks[name]) == "function" then
+				local result = gm.Hooks[name](gm, ...)
 
-			if result != nil then
-				return result
+				if result != nil then
+					return result
+				end
 			end
 		end
 	end
@@ -114,3 +121,11 @@ GM.Items = {
 GM.Flag = "ut99_flag"
 
 GM.PlayerSpeed = 400 -- The speed of the player, walking and running will be the same speed.
+
+GM.PlayerModels = {
+	"models/ut/commando.mdl",
+	"models/ut/commandofemale.mdl",
+	"models/ut/soldier.mdl",
+	"models/ut/soldierfemale.mdl"
+}
+

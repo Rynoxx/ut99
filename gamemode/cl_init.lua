@@ -17,6 +17,9 @@ net.Receive("GamemodeChanged", function(len)
 	(GM or GAMEMODE or gmod.GetGamemode()).Gamemode = net.ReadString()
 end)
 
+CreateClientConVar( "ut_playermodel", 1, true, true)
+CreateClientConVar( "ut_playermodel_skin", 0, true, true)
+
 local hideThese = {
 	"CHudWeaponSelection",
 	"CHudWeapon"
