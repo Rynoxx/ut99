@@ -5,7 +5,7 @@ DATA.TeamBased = true
 function DATA.Hooks.MatchStart(self)
 	local gm = GM or GAMEMODE or gmod.GetGamemode()
 
-	if gm.FlagSpawns then
+	--[[if gm.FlagSpawns then
 		local redFlag = ents.Create(gm.Flag)
 		redFlag.team = TEAM_RED
 		redFlag:Spawn()
@@ -17,7 +17,7 @@ function DATA.Hooks.MatchStart(self)
 		blueFlag:Spawn()
 		blueFlag:Activate()
 		blueFlag:Respawn()
-	end
+	end--]]
 end
 
 function DATA.Hooks.PlayerInitialSpawn(self, ply)

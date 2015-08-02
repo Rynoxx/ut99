@@ -2,6 +2,15 @@
 {
 	"base"		"base"
 	"title"		"Unreal Tournament 99"
-	"maps"		"^dm_|^ctf_"
+	"maps"		"^dm-|^ctf-|^dm_|^ctf_"
 	"menusystem"	"1"
+	"settings" {
+		1 {
+			"name" "ut_gamemode"
+			"text" "The UT99 gamemode to run: ctf, tdm, ffa, instagib_ffa, instagib_tdm, as"
+			"help" "The UT99 gamemode to run: ctf (Capture The Flag), tdm (Team DeathMatch), ffa (Free For All), instagib_ffa (Free For All Instagib), instagib_tdm (Team DeathMatch Instagib), as (Assault)"
+			"default" "ctf"
+			"type" "Text"
+		}
+	}
 }
