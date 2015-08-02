@@ -1,8 +1,8 @@
 
 local map = game.GetMap()
 
-if file.Exists(GM.FolderName .. "/maps/" .. map, "lua") then
-	include(GM.FolderName .. "/maps/" .. map)
+if file.Exists(GM.FolderName .. "/gamemode/maps/" .. map, "lua") then
+	include(GM.FolderName .. "/gamemode/maps/" .. map)
 end
 
 GM.Gamemodes = {
@@ -16,25 +16,32 @@ GM.Gamemodes = {
 	--]]
 }
 
-local files, folders = file.Find(GM.FolderName .. "/gamemodes/*.lua", "LUA")
+GM.Maps = {}
+
+local maps, folders = file.Find(GM.FolderName .. "/gamemode/gamemodes/*.lua", "LUA")
+
+for k, v in pairs(maps) do
+	table.insert(GM.Maps, string.Replace(v, ".lua", ""))
+end
+
+function GM:RegisterGamemode(DATA)
+	self.Gamemodes[DATA.id] = DATA
+end
+
+local files, folders = file.Find(GM.FolderName .. "/gamemode/gamemodes/*.lua", "LUA")
 
 for k, v in pairs(files) do
-	print(k, v)
 	DATA = {id = string.Replace(v, ".lua", ""), Hooks = {}}
 
-	include(GM.FolderName .. "/gamemodes/" .. v)
+	include(GM.FolderName .. "/gamemode/gamemodes/" .. v)
 
 	if SERVER then
-		AddCSLuaFile(GM.FolderName .. "/gamemodes/" .. v)
+		AddCSLuaFile(GM.FolderName .. "/gamemode/gamemodes/" .. v)
 	end
 
 	GM:RegisterGamemode(DATA)
 
 	DATA = nil
-end
-
-function GM:RegisterGamemode(DATA)
-	self.Gamemodes[DATA.id] = DATA
 end
 
 hook.OldCall = hook.OldCall or hook.Call
