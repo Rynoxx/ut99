@@ -1,5 +1,6 @@
 include("teams.lua")
 include("sh_init.lua")
+include("weapon_select.lua")
 
 RunConsoleCommand("ut_hud", "1")
 RunConsoleCommand("ut_hud_weapons", "1")
@@ -26,5 +27,5 @@ local hideThese = {
 }
 
 hook.Add("HUDShouldDraw", "HideThings", function(name)
-	if hideThese[name] then return end
+	if hideThese[name] then return false end
 end)

@@ -1,7 +1,9 @@
 include("teams.lua")
 include("sh_init.lua")
+include("weapon_select.lua")
 AddCSLuaFile("teams.lua")
 AddCSLuaFile("sh_init.lua")
+AddCSLuaFile("weapon_select.lua")
 
 util.AddNetworkString("GamemodeChanged")
 util.AddNetworkString("PlayerInitialized")
